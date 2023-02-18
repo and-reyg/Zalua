@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/authorization_navigation"
+    app:startDestination="@id/launchFragment6">
+
+    <fragment
+        android:id="@+id/chooseSeloFragment"
+        android:name="com.hortopan.seloinfo.presentation.fragments.ChooseSeloFragment"
+        android:label="fragment_choose_selo"
+        tools:layout="@layout/fragment_choose_selo" />
+    <fragment
+        android:id="@+id/launchFragment6"
+        android:name="com.hortopan.seloinfo.presentation.fragments.LaunchFragment"
+        android:label="fragment_launch"
+        tools:layout="@layout/fragment_launch" >
+        <action
+            android:id="@+id/action_launchFragment6_to_chooseSeloFragment"
+            app:destination="@id/chooseSeloFragment" />
+    </fragment>
+</navigation>

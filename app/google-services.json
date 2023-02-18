@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "695720969778",
+    "project_id": "selo-info",
+    "storage_bucket": "selo-info.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695720969778:android:9b3a5e5cb1935958951e2b",
+        "android_client_info": {
+          "package_name": "com.horan.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9vG5lyCtBoXE4oasPQkVfxtOnxpdDNLk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695720969778:android:653716e9b33825bf951e2b",
+        "android_client_info": {
+          "package_name": "com.hortopan.numbercomposition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9vG5lyCtBoXE4oasPQkVfxtOnxpdDNLk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695720969778:android:34feff84d2551d1c951e2b",
+        "android_client_info": {
+          "package_name": "com.hortopan.seloinfo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695720969778-srp9mstj9h8c3st970bn8g62g78o1j02.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hortopan.seloinfo",
+            "certificate_hash": "0e119c3f2b1c15439cd657b4f2dfe33b58e26b9e"
+          }
+        },
+        {
+          "client_id": "695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9vG5lyCtBoXE4oasPQkVfxtOnxpdDNLk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

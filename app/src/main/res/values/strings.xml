@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Selo Info</string>
+    <!-- Menu -->
+    <string name="settings">Налаштування</string>
+    <string name="advertisement">Оголошення</string>
+
+    <!-- Authorization Fragment -->
+    <string name="authorization_text">Натисни кнопку для авторизації</string>
+    <string name="authorization_button_name">Авторизація</string>
+
+    <!-- ChooseSelo Fragment -->
+    <string name="choose_region_text">Обери область</string>
+    <string name="choose_town_text">Обери населений пункт</string>
+    <string name="title_activity_maps">MapsActivity</string>
+
+
+    <!--<string name="default_web_client_id">695720969778-ru6icsn4n9l0jp12o2sadvifmadfjgao.apps.googleusercontent.com</string>
+    -->
+
+</resources>
