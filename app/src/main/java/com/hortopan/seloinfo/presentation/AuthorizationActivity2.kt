@@ -13,13 +13,12 @@ import com.google.android.gms.common.api.ApiException
 import com.hortopan.seloinfo.R
 import com.hortopan.seloinfo.data.RepositoryImpl
 import com.hortopan.seloinfo.databinding.ActivityAuthorisationBinding
-import com.hortopan.seloinfo.domain.entity.UserDataByGmailAuth
 import com.hortopan.seloinfo.domain.repository.Repository
 import com.hortopan.seloinfo.domain.usecases.CheckAuthorizationUseCase
 import com.hortopan.seloinfo.domain.usecases.SignUpByGoogleUseCase
 import kotlinx.coroutines.*
 
-class AuthorizationActivity : AppCompatActivity() {
+class AuthorizationActivity2 : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthorisationBinding
     private lateinit var repository: Repository
@@ -54,15 +53,15 @@ class AuthorizationActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val isAuthorized = checkAuthorizationUseCase()
             if (isAuthorized) {
-                openChooseLocationActivity()
+                openMainActivity()
             } else {
                 openRegistrationForm()
             }
         }
     }
 
-    private fun openChooseLocationActivity() {
-        startActivity(Intent(this, ChooseLocationActivity::class.java))
+    private fun openMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
@@ -81,18 +80,18 @@ class AuthorizationActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 CoroutineScope(Dispatchers.IO).launch {
                     signUpByGoogleUseCase(account)
-                    openChooseLocationActivity()
+                    openMainActivity()
                 }
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("TAG", "Google sign in failed", e)
+                Log.w(TAG, "Google sign in failed", e)
                 Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 
     companion object {
+        private const val TAG = "AuthorizationActivity"
         private const val RC_SIGN_IN = 123
     }
 }
