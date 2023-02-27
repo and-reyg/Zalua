@@ -1,11 +1,13 @@
 package com.hortopan.seloinfo.data
 
+import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hortopan.seloinfo.domain.entity.UserDataByGmailAuth
 import com.hortopan.seloinfo.domain.entity.User
+import com.hortopan.seloinfo.domain.entity.UsersDocuments
 import com.hortopan.seloinfo.domain.repository.Repository
 import kotlinx.coroutines.tasks.await
 
@@ -33,12 +35,36 @@ class RepositoryImpl : Repository {
     }
 
     override suspend fun saveUserData(userData: UserDataByGmailAuth) {
-        val db = FirebaseFirestore.getInstance()
-        val docId = "user_${userData.id}"
+        val fireStore = FirebaseFirestore.getInstance()
+        val docId = userData.id
         val user = User(userData.name, userData.id)
-        db.collection("Users")
+        fireStore.collection("Users")
             .document(docId)
             .set(user)
             .await()
+    }
+
+    override suspend fun getUsersDocumentsID(): List<String> {
+        val usersDocumentList: MutableList<String> = mutableListOf<String>()
+        val firestore = fireStore
+
+        // Get reference to the "Users" collection
+        val usersCollection = firestore.collection("Users")
+
+        // Query Firestore for documents in the "Users" collection
+        usersCollection.get()
+            .addOnSuccessListener { documents ->
+                // Iterate through the documents and add their IDs to the list
+                for (document in documents) {
+                    val id = document.id
+                    Log.d("TAG", "id = $id")
+                    usersDocumentList.add(id)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents: ", exception)
+            }.await()
+
+        return usersDocumentList
     }
 }
