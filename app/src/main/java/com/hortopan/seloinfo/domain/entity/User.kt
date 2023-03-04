@@ -3,6 +3,7 @@ package com.hortopan.seloinfo.domain.entity
 
 
 data class User(
-    val gmailName: String,
-    val userId: String,
+    val userGmailName: String,
+    val selectedRegionID : String,
+    val selectedSeloId : String
 )

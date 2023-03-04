@@ -13,19 +13,17 @@ import com.google.android.gms.common.api.ApiException
 import com.hortopan.seloinfo.R
 import com.hortopan.seloinfo.data.RepositoryImpl
 import com.hortopan.seloinfo.databinding.ActivityAuthorisationBinding
+import com.hortopan.seloinfo.domain.entity.UserDataByGmailAuth
 import com.hortopan.seloinfo.domain.repository.Repository
 import com.hortopan.seloinfo.domain.usecases.CheckAuthorizationUseCase
-import com.hortopan.seloinfo.domain.usecases.CheckUserRegistrationUseCase
 import com.hortopan.seloinfo.domain.usecases.SignUpByGoogleUseCase
-import com.hortopan.seloinfo.domain.usecases.UserRegistrationStatus
 import kotlinx.coroutines.*
 
-class AuthorizationActivity : AppCompatActivity() {
+class AuthorizationActivit_New : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthorisationBinding
     private lateinit var repository: Repository
     private lateinit var checkAuthorizationUseCase: CheckAuthorizationUseCase
-    private lateinit var checkUserRegistrationUseCase: CheckUserRegistrationUseCase
     private lateinit var signUpByGoogleUseCase: SignUpByGoogleUseCase
     private lateinit var googleSignInOptions: GoogleSignInOptions
 
@@ -37,7 +35,6 @@ class AuthorizationActivity : AppCompatActivity() {
         // Initialize dependencies
         repository = RepositoryImpl()
         checkAuthorizationUseCase = CheckAuthorizationUseCase(repository)
-        checkUserRegistrationUseCase = CheckUserRegistrationUseCase(repository)
         signUpByGoogleUseCase = SignUpByGoogleUseCase(repository)
 
         // Create GoogleSignInOptions
@@ -48,41 +45,20 @@ class AuthorizationActivity : AppCompatActivity() {
 
         // Show logo for 2 seconds
         Handler(Looper.getMainLooper()).postDelayed({
-            // Check user registration status
-            checkUserRegistrationStatus()
+            // Check if user is authorized
+            checkAuthorization()
         }, 2000)
     }
 
-    private fun checkUserRegistrationStatus() {
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val userRegistrationStatus = withContext(Dispatchers.IO) {
-                    checkUserRegistrationUseCase()
-                }
-
-                when (userRegistrationStatus) {
-                    UserRegistrationStatus.Registered -> {
-                        Log.d("TAG", "Зарегестрирован")
-                        openMainActivity()
-                    }
-                    UserRegistrationStatus.NotRegistered -> {
-                        Log.d("TAG", "Не Зарегестрирован Открыть Выбор Села")
-                        openChooseLocationActivity()
-                    }
-                    UserRegistrationStatus.NotGoogleAuthenticated -> {
-                        Log.d("TAG", "Не авторизован")
-                        openRegistrationForm()
-                    }
-                }
-            } catch (exception: Exception) {
-                Log.e("TAG", "Error checking user registration status: $exception")
+    private fun checkAuthorization() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val isAuthorized = checkAuthorizationUseCase()
+            if (isAuthorized) {
+                openChooseLocationActivity()
+            } else {
+                openRegistrationForm()
             }
         }
-    }
-
-    private fun openMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 
     private fun openChooseLocationActivity() {
@@ -112,6 +88,7 @@ class AuthorizationActivity : AppCompatActivity() {
                 Log.w("TAG", "Google sign in failed", e)
                 Toast.makeText(this, "Google sign in failed", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

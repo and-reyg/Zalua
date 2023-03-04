@@ -5,9 +5,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.hortopan.seloinfo.domain.entity.Regions
 import com.hortopan.seloinfo.domain.entity.UserDataByGmailAuth
 import com.hortopan.seloinfo.domain.entity.User
-import com.hortopan.seloinfo.domain.entity.UsersDocuments
 import com.hortopan.seloinfo.domain.repository.Repository
 import kotlinx.coroutines.tasks.await
 
@@ -30,14 +30,15 @@ class RepositoryImpl : Repository {
         val currentUser = auth.currentUser
         val email = currentUser?.email ?: throw Exception("User is not authenticated")
         val name = currentUser.displayName ?: "Unknown"
-        val id = currentUser.uid
+        val id = currentUser?.uid ?: "Unknown ID"
         return UserDataByGmailAuth(name, email, id)
     }
 
     override suspend fun saveUserData(userData: UserDataByGmailAuth) {
-        val fireStore = FirebaseFirestore.getInstance()
+        val fireStore = fireStore
         val docId = userData.id
-        val user = User(userData.name, userData.id)
+        //val user = User(userData.name, userData.id)
+        val user = User(userGmailName = userData.name, selectedRegionID = "regionID", selectedSeloId = "seloID")
         fireStore.collection("Users")
             .document(docId)
             .set(user)
@@ -66,5 +67,20 @@ class RepositoryImpl : Repository {
             }.await()
 
         return usersDocumentList
+    }
+
+    override suspend fun getRegions(): List<Regions> {
+        val regions = mutableListOf<Regions>()
+        try {
+            val snapshot = fireStore.collection("Regions").get().await()
+            for (document in snapshot.documents) {
+                val docId = document.id
+                val name = document.getString("name")
+                regions.add(Regions(docId = docId, name = name ?: ""))
+            }
+        } catch (exception: Exception) {
+            Log.e("TAG", "Error getting regions: $exception")
+        }
+        return regions
     }
 }
