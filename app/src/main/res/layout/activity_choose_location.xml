@@ -46,26 +46,27 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_choose_region_text" />
 
     <Spinner
-        android:id="@+id/spinner_choose_location"
+        android:id="@+id/spinner_choose_town"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Обери місто"
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:contentDescription="Обери місто"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_choose_location_text" />
 
     <Button
-        android:id="@+id/btn_ok"
+        android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
+        android:text="Далі"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_choose_location" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_choose_town" />
 </androidx.constraintlayout.widget.ConstraintLayout>

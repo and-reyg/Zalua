@@ -5,7 +5,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hortopan.seloinfo.domain.entity.Regions
+import com.hortopan.seloinfo.domain.entity.Region
+import com.hortopan.seloinfo.domain.entity.Town
 import com.hortopan.seloinfo.domain.entity.UserDataByGmailAuth
 import com.hortopan.seloinfo.domain.entity.User
 import com.hortopan.seloinfo.domain.repository.Repository
@@ -34,11 +35,11 @@ class RepositoryImpl : Repository {
         return UserDataByGmailAuth(name, email, id)
     }
 
-    override suspend fun saveUserData(userData: UserDataByGmailAuth) {
+    override suspend fun saveUserData(userData: UserDataByGmailAuth, selectedTownId: String) {
         val fireStore = fireStore
         val docId = userData.id
         //val user = User(userData.name, userData.id)
-        val user = User(userGmailName = userData.name, selectedRegionID = "regionID", selectedSeloId = "seloID")
+        val user = User(userGmailName = userData.name, selectedTownId = selectedTownId)
         fireStore.collection("Users")
             .document(docId)
             .set(user)
@@ -69,18 +70,38 @@ class RepositoryImpl : Repository {
         return usersDocumentList
     }
 
-    override suspend fun getRegions(): List<Regions> {
-        val regions = mutableListOf<Regions>()
+    override suspend fun getRegions(): List<Region> {
+        val regions = mutableListOf<Region>()
         try {
             val snapshot = fireStore.collection("Regions").get().await()
             for (document in snapshot.documents) {
                 val docId = document.id
                 val name = document.getString("name")
-                regions.add(Regions(docId = docId, name = name ?: ""))
+                regions.add(Region(docId = docId, name = name ?: ""))
             }
         } catch (exception: Exception) {
             Log.e("TAG", "Error getting regions: $exception")
         }
         return regions
     }
+
+    override suspend fun getTowns(regionId: String): List<Town> {
+        val towns = mutableListOf<Town>()
+        try {
+            val snapshot = fireStore.collection("Towns")
+                .whereEqualTo("region_id", regionId).get().await()
+            for (document in snapshot.documents) {
+                val docId = document.id
+                val name = document.getString("name")
+                val town = Town(regionId = regionId, townId = docId, name = name ?: "")
+                towns.add(town)
+            }
+        } catch (exception: Exception) {
+            Log.e("TAG", "Error getting towns: $exception")
+        }
+        return towns
+    }
+
+
+
 }
