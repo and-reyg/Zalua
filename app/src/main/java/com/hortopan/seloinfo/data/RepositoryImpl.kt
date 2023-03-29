@@ -10,6 +10,7 @@ import com.hortopan.seloinfo.domain.entity.Town
 import com.hortopan.seloinfo.domain.entity.UserDataByGmailAuth
 import com.hortopan.seloinfo.domain.entity.User
 import com.hortopan.seloinfo.domain.repository.Repository
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.tasks.await
 
 class RepositoryImpl : Repository {
@@ -45,7 +46,7 @@ class RepositoryImpl : Repository {
             .set(user)
             .await()
     }
-
+/* old code
     override suspend fun getUsersDocumentsID(): List<String> {
         val usersDocumentList: MutableList<String> = mutableListOf<String>()
         val firestore = fireStore
@@ -68,6 +69,25 @@ class RepositoryImpl : Repository {
             }.await()
 
         return usersDocumentList
+    }
+ */
+    override suspend fun getUsersDocumentsID(): List<String> = coroutineScope {
+        val usersDocumentList: MutableList<String> = mutableListOf<String>()
+        val firestore = fireStore
+
+        // Get reference to the "Users" collection
+        val usersCollection = firestore.collection("Users")
+
+        // Query Firestore for documents in the "Users" collection
+        val documents = usersCollection.get().await()
+        // Iterate through the documents and add their IDs to the list
+        for (document in documents) {
+            val id = document.id
+            Log.d("TAG", "id = $id")
+            usersDocumentList.add(id)
+        }
+
+        usersDocumentList
     }
 
     override suspend fun getRegions(): List<Region> {

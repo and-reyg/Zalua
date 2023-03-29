@@ -18,7 +18,8 @@
 
         <activity
             android:name=".presentation.AuthorizationActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.SeloInfo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +28,8 @@
         </activity>
         <activity
             android:name=".presentation.ChooseLocationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.SeloInfo.NoActionBar"/>
         <activity
             android:name=".presentation.MainActivity"
             android:exported="false" />

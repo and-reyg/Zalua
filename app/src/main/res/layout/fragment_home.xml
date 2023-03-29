@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".presentation.fragments.HomeFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/buttonOpenMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Open Menu"
+            android:layout_gravity="center"/>
+
+        <!-- Другие элементы интерфейса фрагмента -->
+
+    </FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="home" />
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/main_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
